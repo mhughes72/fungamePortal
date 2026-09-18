@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Matt Hughes</title>
+<style>
+  :root{
+    --bg:#0f1216;
+    --surface:#171b21;
+    --surface-2:#1f242c;
+    --line:rgba(237,231,216,0.09);
+    --text:#eae6da;
+    --text-dim:#98978c;
+    --text-faint:#65635a;
+    --accent:#d19a4a;
+    --accent-strong:#e9b568;
+    --accent-2:#a34b3f;
+    --focus:#d19a4a;
+    font-size:16px;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:"IBM Plex Sans", Arial, sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{max-width:100%;}
+  [hidden]{display:none!important;}
+  a{color:var(--accent-strong);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+
+  h1,h2,h3{
+    font-family:"Fraunces", Georgia, serif;
+    font-weight:600;
+    text-wrap:balance;
+    margin:0;
+  }
+
+  .mono{
+    font-family:"IBM Plex Mono", "Courier New", monospace;
+  }
+
+  .wrap{
+    max-width:1080px;
+    margin:0 auto;
+    padding-inline:24px;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding-block:88px 64px;
+    border-bottom:1px solid var(--line);
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:-20% -10% auto auto;
+    width:520px;
+    height:520px;
+    background:radial-gradient(circle, rgba(209,154,74,0.16), transparent 70%);
+    pointer-events:none;
+  }
+  .hero-inner{position:relative;z-index:1;}
+  .eyebrow{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:0.78rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--accent-strong);
+    margin:0 0 18px;
+  }
+  .hero h1{
+    font-size:clamp(2.6rem, 6vw, 4.2rem);
+    letter-spacing:-0.01em;
+    margin-bottom:18px;
+  }
+  .tagline{
+    max-width:640px;
+    font-size:1.1rem;
+    color:var(--text-dim);
+    margin:0 0 32px;
+  }
+  .hero-links{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px 22px;
+    align-items:center;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:0.9rem;
+    color:var(--text-faint);
+    margin-bottom:40px;
+  }
+  .hero-links a{color:var(--text);}
+  .hero-links span::before{content:"— ";color:var(--text-faint);}
+  .hero-cta{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    border:1px solid var(--accent);
+    color:var(--accent-strong);
+    padding:12px 20px;
+    border-radius:999px;
+    font-size:0.92rem;
+    font-weight:600;
+    text-decoration:none;
+    transition:background 0.15s ease, color 0.15s ease;
+  }
+  .hero-cta:hover{
+    background:var(--accent);
+    color:#171308;
+    text-decoration:none;
+  }
+
+  /* ---------- BACKGROUND / TIMELINE ---------- */
+  .background{padding-block:64px;border-bottom:1px solid var(--line);}
+  .section-head{margin-bottom:36px;max-width:640px;}
+  .section-head h2{font-size:1.9rem;margin-bottom:12px;}
+  .section-head p{color:var(--text-dim);margin:0;}
+
+  .timeline{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+  }
+  .timeline li{
+    display:grid;
+    grid-template-columns:150px 1fr;
+    gap:20px;
+    padding-block:18px;
+    border-top:1px solid var(--line);
+  }
+  .timeline li:first-child{border-top:none;}
+  .yr{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:0.82rem;
+    color:var(--text-faint);
+    padding-top:3px;
+  }
+  .role-line{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;margin-bottom:4px;}
+  .role{font-weight:600;color:var(--text);}
+  .org{color:var(--accent-strong);font-size:0.95rem;}
+  .timeline p{margin:0;color:var(--text-dim);font-size:0.95rem;max-width:560px;}
+
+  /* ---------- LAB ---------- */
+  .lab{padding-block:72px;border-bottom:1px solid var(--line);}
+  .lab .section-head{max-width:680px;}
+
+  .projects{
+    display:flex;
+    flex-direction:column;
+    gap:28px;
+  }
+
+  .project{
+    display:grid;
+    grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
+    gap:0;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:18px;
+    overflow:hidden;
+  }
+  .project.reverse .poster{order:2;}
+  .project.reverse .card-body{order:1;}
+
+  .poster{
+    position:relative;
+    min-height:260px;
+    overflow:hidden;
+  }
+  .poster svg{display:block;width:100%;height:100%;}
+
+  .card-body{
+    padding:32px 34px;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+  .card-kicker{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:0.72rem;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+  }
+  .card-body h3{font-size:1.5rem;line-height:1.2;}
+  .card-tagline{
+    font-style:italic;
+    color:var(--accent-strong);
+    font-family:"Fraunces", Georgia, serif;
+    font-size:1.05rem;
+    margin:0;
+  }
+  .card-desc{color:var(--text-dim);margin:0;font-size:0.97rem;}
+
+  .chip-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:2px;}
+  .chip{
+    font-size:0.78rem;
+    padding:5px 11px;
+    border-radius:999px;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    color:var(--text-dim);
+  }
+
+  .stack-row{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:0.8rem;
+    color:var(--text-faint);
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px 0;
+  }
+  .stack-row .sep{margin:0 8px;color:var(--line);}
+
+  .card-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px;}
+  .btn{
+    font-size:0.86rem;
+    font-weight:600;
+    padding:10px 18px;
+    border-radius:10px;
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+  }
+  .btn-primary{background:var(--accent);color:#171308;}
+  .btn-primary:hover{background:var(--accent-strong);text-decoration:none;}
+  .btn-ghost{border:1px solid var(--line);color:var(--text);}
+  .btn-ghost:hover{border-color:var(--text-faint);text-decoration:none;}
+
+  /* ---------- FOOTER ---------- */
+  .skills{padding-block:64px 40px;}
+  .skill-groups{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+    gap:28px;
+    margin-bottom:56px;
+  }
+  .skill-group h4{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:0.75rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--accent-strong);
+    margin:0 0 12px;
+    font-weight:600;
+  }
+  .skill-group ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;}
+  .skill-group li{color:var(--text-dim);font-size:0.92rem;}
+
+  .footer-bottom{
+    border-top:1px solid var(--line);
+    padding-top:28px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    gap:16px;
+    align-items:baseline;
+  }
+  .footer-bottom .hero-links{margin-bottom:0;}
+  .footnote{font-size:0.82rem;color:var(--text-faint);}
+
+  @media (max-width:760px){
+    .project{grid-template-columns:1fr;}
+    .project.reverse .poster{order:0;}
+    .project.reverse .card-body{order:0;}
+    .poster{min-height:190px;}
+    .timeline li{grid-template-columns:1fr;}
+    .yr{padding-top:0;}
+  }
+
+  @media (prefers-reduced-motion:no-preference){
+    .project{
+      animation:rise 0.5s ease both;
+    }
+    .project:nth-child(1){animation-delay:0s;}
+    .project:nth-child(2){animation-delay:0.08s;}
+    .project:nth-child(3){animation-delay:0.16s;}
+    .project:nth-child(4){animation-delay:0.24s;}
+  }
+  @keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap hero-inner">
+    <p class="eyebrow">Senior Product Manager — Toronto</p>
+    <h1>Matt Hughes</h1>
+    <p class="tagline">Data-driven product veteran, twenty years into shipping streaming platforms and analytics engines. Lately I've been building small, playable proofs that I understand agentic AI as well as I understand a roadmap.</p>
+    <div class="hero-links">
+      <a href="mailto:matthughes72@gmail.com">matthughes72@gmail.com</a>
+      <a href="https://github.com/mhughes72" target="_blank" rel="noopener">GitHub ↗</a>
+      <span>Picton, Ontario</span>
+    </div>
+    <a class="hero-cta" href="#lab">See the experiments ↓</a>
+  </div>
+</header>
+
+<section class="background">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Career so far</h2>
+      <p>Started as a developer, spent most of two decades running product for streaming and analytics platforms, and now build AI systems for clients at a boutique AI consultancy.</p>
+    </div>
+    <ol class="timeline">
+      <li>
+        <span class="yr mono">2022 — Present</span>
+        <div>
+          <div class="role-line"><span class="role">Senior Product Manager</span><span class="org">Architech, Toronto</span></div>
+          <p>AI solutions for a portfolio of clients ranging from startups to leading telecom and media companies.</p>
+        </div>
+      </li>
+      <li>
+        <span class="yr mono">2021 — 2022</span>
+        <div>
+          <div class="role-line"><span class="role">Senior Product Manager</span><span class="org">Proposify, Halifax</span></div>
+          <p>Grew a contract management product using qualitative and quantitative data — integrations, A/B testing, workflow expedition, user interviews.</p>
+        </div>
+      </li>
+      <li>
+        <span class="yr mono">2020 — 2021</span>
+        <div>
+          <div class="role-line"><span class="role">Career Break</span><span class="org">Professional Development</span></div>
+          <p>Modernized technical skills with certificates in React, Angular, Node.js, C, Python, R, Data Science, and Statistics.</p>
+        </div>
+      </li>
+      <li>
+        <span class="yr mono">2017 — 2020</span>
+        <div>
+          <div class="role-line"><span class="role">Senior Digital Product Manager</span><span class="org">SOCAN, Toronto</span></div>
+          <p>Led design and development of an API tracking third-party application results, integrating traffic analytics into development decisions.</p>
+        </div>
+      </li>
+      <li>
+        <span class="yr mono">2014 — 2017</span>
+        <div>
+          <div class="role-line"><span class="role">Manager, Product Development</span><span class="org">Shomi.com, Toronto</span></div>
+          <p>Designed core analytics and recommendation engines for a nationwide video streaming service.</p>
+        </div>
+      </li>
+      <li>
+        <span class="yr mono">2010 — 2014</span>
+        <div>
+          <div class="role-line"><span class="role">Product Manager</span><span class="org">CBC.ca, Toronto</span></div>
+          <p>Built a nationwide video streaming service centred on usage analysis and advertising technology.</p>
+        </div>
+      </li>
+      <li>
+        <span class="yr mono">2008 — 2010</span>
+        <div>
+          <div class="role-line"><span class="role">Flash Developer</span><span class="org">Canwest, Toronto</span></div>
+          <p>Wrote ActionScript to implement Omniture analytics support into a nationwide streaming platform.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="lab" class="lab">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>The AI Lab</h2>
+      <p>Four live experiments in agentic AI, built to keep my product instincts current with what these systems can actually do — LangGraph state machines, RAG memory, multi-agent debate, tool-calling economies. Each one is playable, not just described.</p>
+    </div>
+
+    <div class="projects">
+
+      <article class="project">
+        <div class="poster">
+          <svg viewBox="0 0 600 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Warm amber bar scene with a row of portrait circles">
+            <defs>
+              <radialGradient id="barGlow" cx="30%" cy="25%" r="75%">
+                <stop offset="0%" stop-color="#3a2412"/>
+                <stop offset="100%" stop-color="#1a1006"/>
+              </radialGradient>
+              <linearGradient id="barBar" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#241708"/>
+                <stop offset="100%" stop-color="#150d04"/>
+              </linearGradient>
+            </defs>
+            <rect width="600" height="500" fill="url(#barGlow)"/>
+            <rect y="380" width="600" height="120" fill="url(#barBar)"/>
+            <rect y="376" width="600" height="6" fill="#5a3a17"/>
+            <g fill="none" stroke="#7a5628" stroke-width="2" opacity="0.5">
+              <line x1="0" y1="60" x2="600" y2="60"/>
+              <line x1="0" y1="130" x2="600" y2="130"/>
+            </g>
+            <g>
+              <circle cx="150" cy="180" r="58" fill="#4a3018" opacity="0.9"/>
+              <circle cx="300" cy="150" r="66" fill="#5a3a1f" opacity="0.95"/>
+              <circle cx="450" cy="185" r="58" fill="#4a3018" opacity="0.9"/>
+              <circle cx="150" cy="180" r="58" fill="none" stroke="#d19a4a" stroke-width="2" opacity="0.6"/>
+              <circle cx="300" cy="150" r="66" fill="none" stroke="#e9b568" stroke-width="2.5" opacity="0.8"/>
+              <circle cx="450" cy="185" r="58" fill="none" stroke="#d19a4a" stroke-width="2" opacity="0.6"/>
+            </g>
+            <text x="300" y="320" text-anchor="middle" font-family="Georgia, serif" font-size="30" fill="#e9b568" letter-spacing="2">THE PHILOSOPHER'S BAR</text>
+            <text x="300" y="352" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="15" fill="#a8845a">"Is our fate predetermined, or do we truly have agency?"</text>
+          </svg>
+        </div>
+        <div class="card-body">
+          <span class="card-kicker mono">Experiment 01 · Multi-agent debate</span>
+          <h3>The Philosopher's Bar</h3>
+          <p class="card-tagline">Put 2–4 historical minds in a room and see who breaks first.</p>
+          <p class="card-desc">A live debate engine: pick your thinkers and a topic, then choose the format — open Freeform, formal Oxford, or ratings-chasing Cable News — and watch the argument route itself, turn by turn, toward whoever the conversation has most activated.</p>
+          <div class="chip-row">
+            <span class="chip">Dynamic speaker selection</span>
+            <span class="chip">Moderator steer breaks</span>
+            <span class="chip">Consensus &amp; tension detection</span>
+            <span class="chip">Heat &amp; concession tracking</span>
+            <span class="chip">Live evidence injection</span>
+            <span class="chip">Rolling context summarization</span>
+          </div>
+          <p class="stack-row">LangGraph<span class="sep">·</span>OpenAI GPT-4o / GPT-4o-mini<span class="sep">·</span>Tavily search</p>
+          <div class="card-actions">
+            <a class="btn btn-primary" href="https://web-production-17a4a7.up.railway.app/" target="_blank" rel="noopener">▶ Play live</a>
+            <a class="btn btn-ghost" href="https://github.com/mhughes72/fungame03" target="_blank" rel="noopener">View code</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project reverse">
+        <div class="poster">
+          <svg viewBox="0 0 600 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Dark haunted study lit by candle glow">
+            <defs>
+              <radialGradient id="candle1" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#e9b568" stop-opacity="0.9"/>
+                <stop offset="100%" stop-color="#e9b568" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="mansionBg" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#14161c"/>
+                <stop offset="100%" stop-color="#05060a"/>
+              </linearGradient>
+            </defs>
+            <rect width="600" height="500" fill="url(#mansionBg)"/>
+            <path d="M230 500 V240 A70 70 0 0 1 370 240 V500 Z" fill="#0a0b10" stroke="#302a20" stroke-width="3"/>
+            <circle cx="300" cy="300" r="150" fill="url(#candle1)"/>
+            <circle cx="150" cy="120" r="2.4" fill="#e9b568"/>
+            <circle cx="470" cy="150" r="2" fill="#e9b568"/>
+            <circle cx="90" cy="260" r="1.6" fill="#c98a3c"/>
+            <ellipse cx="470" cy="360" rx="34" ry="70" fill="#d8d6cf" opacity="0.06"/>
+            <ellipse cx="470" cy="360" rx="34" ry="70" fill="none" stroke="#d8d6cf" stroke-width="1" opacity="0.15"/>
+            <text x="300" y="80" text-anchor="middle" font-family="Georgia, serif" font-size="26" fill="#e9b568" letter-spacing="3">AI DRIVEN HAUNTED MANSION</text>
+            <text x="300" y="440" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="14" fill="#8a7a5a">The ghosts remember what you told the butler.</text>
+          </svg>
+        </div>
+        <div class="card-body">
+          <span class="card-kicker mono">Experiment 02 · Memory &amp; social simulation</span>
+          <h3>AI Driven Haunted Mansion</h3>
+          <p class="card-tagline">The ghosts remember what you told the butler.</p>
+          <p class="card-desc">A text adventure where every NPC keeps an independent memory, mood, and fear level — and gossips about you to the rest of the house the moment you leave the room, so a bad first impression follows you from study to cellar.</p>
+          <div class="chip-row">
+            <span class="chip">RAG memory (Pinecone + HyDE)</span>
+            <span class="chip">Per-NPC emotional state</span>
+            <span class="chip">Gossip network propagation</span>
+            <span class="chip">Agentic shopkeeper</span>
+            <span class="chip">ReAct web search</span>
+            <span class="chip">Token-streamed responses</span>
+          </div>
+          <p class="stack-row">LangGraph<span class="sep">·</span>GPT-4o-mini<span class="sep">·</span>Pinecone</p>
+          <div class="card-actions">
+            <a class="btn btn-primary" href="https://web-production-54fd0.up.railway.app/" target="_blank" rel="noopener">▶ Play live</a>
+            <a class="btn btn-ghost" href="https://github.com/mhughes72/fungame02" target="_blank" rel="noopener">View code</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="poster">
+          <svg viewBox="0 0 600 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Navy and gold game show board">
+            <defs>
+              <linearGradient id="jeoBg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#0d1442"/>
+                <stop offset="100%" stop-color="#050818"/>
+              </linearGradient>
+            </defs>
+            <rect width="600" height="500" fill="url(#jeoBg)"/>
+            <g>
+              <rect x="40" y="110" width="120" height="80" rx="4" fill="#152066" stroke="#e9b568" stroke-width="1.5"/>
+              <rect x="172" y="110" width="120" height="80" rx="4" fill="#152066" stroke="#e9b568" stroke-width="1.5"/>
+              <rect x="304" y="110" width="120" height="80" rx="4" fill="#152066" stroke="#e9b568" stroke-width="1.5"/>
+              <rect x="436" y="110" width="120" height="80" rx="4" fill="#152066" stroke="#e9b568" stroke-width="1.5"/>
+              <rect x="40" y="200" width="120" height="80" rx="4" fill="#0f1852" stroke="#3a4a8a" stroke-width="1.5"/>
+              <rect x="172" y="200" width="120" height="80" rx="4" fill="#0f1852" stroke="#3a4a8a" stroke-width="1.5"/>
+              <rect x="304" y="200" width="120" height="80" rx="4" fill="#0f1852" stroke="#3a4a8a" stroke-width="1.5"/>
+              <rect x="436" y="200" width="120" height="80" rx="4" fill="#0f1852" stroke="#3a4a8a" stroke-width="1.5"/>
+              <text x="100" y="158" text-anchor="middle" font-family="Georgia, serif" font-size="22" fill="#e9b568">$?</text>
+              <text x="232" y="158" text-anchor="middle" font-family="Georgia, serif" font-size="22" fill="#e9b568">$?</text>
+              <text x="364" y="158" text-anchor="middle" font-family="Georgia, serif" font-size="22" fill="#e9b568">$?</text>
+              <text x="496" y="158" text-anchor="middle" font-family="Georgia, serif" font-size="22" fill="#e9b568">$?</text>
+            </g>
+            <text x="300" y="70" text-anchor="middle" font-family="Georgia, serif" font-weight="bold" font-size="30" fill="#e9b568" letter-spacing="2">NOT JEOPARDY</text>
+            <text x="300" y="330" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="14" fill="#8790c4">No question bank. The board writes itself.</text>
+          </svg>
+        </div>
+        <div class="card-body">
+          <span class="card-kicker mono">Experiment 03 · Generative content &amp; judging</span>
+          <h3>Definitely Not an AI Rip-off of Jeopardy!</h3>
+          <p class="card-tagline">No question bank. The board writes itself.</p>
+          <p class="card-desc">Every category, clue, and answer is generated on demand — nothing pulled from a bank — then independently fact-checked before it ever reaches the board, and judged live against AI contestants with their own speed and accuracy quirks.</p>
+          <div class="chip-row">
+            <span class="chip">On-demand clue generation</span>
+            <span class="chip">Independent fact-checking pass</span>
+            <span class="chip">AI contestants with judging</span>
+            <span class="chip">Host commentary + voice</span>
+            <span class="chip">Full LLM tracing</span>
+          </div>
+          <p class="stack-row">GPT-4o<span class="sep">·</span>o4-mini<span class="sep">·</span>GPT-4o-mini<span class="sep">·</span>ElevenLabs TTS<span class="sep">·</span>LangSmith</p>
+          <div class="card-actions">
+            <a class="btn btn-primary" href="https://fungame04-production.up.railway.app/" target="_blank" rel="noopener">▶ Play live</a>
+            <a class="btn btn-ghost" href="https://github.com/mhughes72/fungame04" target="_blank" rel="noopener">View code</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project reverse">
+        <div class="poster">
+          <svg viewBox="0 0 600 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Dark republic emblem with a red square and data lines">
+            <defs>
+              <linearGradient id="verBg" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#12141c"/>
+                <stop offset="100%" stop-color="#060709"/>
+              </linearGradient>
+            </defs>
+            <rect width="600" height="500" fill="url(#verBg)"/>
+            <rect x="278" y="70" width="44" height="44" fill="#a34b3f"/>
+            <polyline points="60,340 140,320 220,360 300,300 380,330 460,270 540,300" fill="none" stroke="#d19a4a" stroke-width="2.5" opacity="0.85"/>
+            <polyline points="60,400 140,390 220,410 300,385 380,400 460,375 540,395" fill="none" stroke="#5a6a7a" stroke-width="2" opacity="0.6"/>
+            <g fill="none" stroke="#2a2d36" stroke-width="1">
+              <line x1="60" y1="200" x2="60" y2="440"/>
+              <line x1="60" y1="440" x2="540" y2="440"/>
+            </g>
+            <text x="300" y="200" text-anchor="middle" font-family="Georgia, serif" font-weight="bold" font-size="26" fill="#eae6da" letter-spacing="2">REPUBLIC OF VERIDIA</text>
+            <text x="300" y="226" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="12" fill="#a34b3f" letter-spacing="2">POLITICAL SIMULATOR</text>
+            <text x="300" y="470" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="14" fill="#8a8880">The country will not be improved by optimism.</text>
+          </svg>
+        </div>
+        <div class="card-body">
+          <span class="card-kicker mono">Experiment 04 · Constrained simulation</span>
+          <h3>Republic of Veridia</h3>
+          <p class="card-tagline">The economy doesn't care how confident your speech was.</p>
+          <p class="card-desc">A twelve-month political survival sim where deterministic game logic sets the hard bounds of truth and the LLM only narrates inside them, classifying faction reactions and generating flavour text — but never writing state directly. Four sub-stats drift on their own rules underneath every decision.</p>
+          <div class="chip-row">
+            <span class="chip">Engine-clamped LLM outputs</span>
+            <span class="chip">Autonomous multi-stat economy</span>
+            <span class="chip">Authored + AI-generated crises</span>
+            <span class="chip">Scripted 26-beat campaign arc</span>
+          </div>
+          <p class="stack-row">LangGraph<span class="sep">·</span>OpenAI<span class="sep">·</span>FastAPI<span class="sep">·</span>React / Vite</p>
+          <div class="card-actions">
+            <a class="btn btn-primary" href="https://fungame05-production.up.railway.app/" target="_blank" rel="noopener">▶ Play live</a>
+            <a class="btn btn-ghost" href="https://github.com/mhughes72/fungame05" target="_blank" rel="noopener">View code</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<footer class="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Toolbox</h2>
+    </div>
+    <div class="skill-groups">
+      <div class="skill-group">
+        <h4>Product &amp; Strategy</h4>
+        <ul>
+          <li>Roadmapping &amp; prioritization</li>
+          <li>A/B testing</li>
+          <li>User research &amp; interviews</li>
+          <li>Technical writing</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h4>AI &amp; Agentic Systems</h4>
+        <ul>
+          <li>LangChain / LangGraph</li>
+          <li>Agentic AI &amp; tool-calling</li>
+          <li>RAG &amp; vector memory</li>
+          <li>Prompt engineering</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h4>Languages &amp; Frameworks</h4>
+        <ul>
+          <li>Python, TypeScript, C#</li>
+          <li>React, Node.js, .NET</li>
+          <li>SQL / NoSQL</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h4>Data &amp; Analytics</h4>
+        <ul>
+          <li>Machine learning &amp; statistics</li>
+          <li>Pandas / NumPy</li>
+          <li>Google Analytics, Tableau</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="hero-links">
+        <a href="mailto:matthughes72@gmail.com">matthughes72@gmail.com</a>
+        <a href="https://github.com/mhughes72" target="_blank" rel="noopener">GitHub ↗</a>
+        <span>Picton, Ontario</span>
+      </div>
+      <p class="footnote">Built with an AI pair, same as everything above it.</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
