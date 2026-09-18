@@ -68,7 +68,26 @@
     background:radial-gradient(circle, rgba(209,154,74,0.16), transparent 70%);
     pointer-events:none;
   }
-  .hero-inner{position:relative;z-index:1;}
+  .hero-inner{
+    position:relative;
+    z-index:1;
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:44px;
+  }
+  .hero-text{flex:1;min-width:0;}
+  .hero-photo{flex-shrink:0;margin-top:4px;}
+  .hero-photo img{
+    display:block;
+    width:148px;
+    height:148px;
+    border-radius:50%;
+    object-fit:cover;
+    border:3px solid var(--accent);
+    box-shadow:0 14px 34px rgba(0,0,0,0.45);
+    filter:saturate(0.92) contrast(1.04);
+  }
   .eyebrow{
     font-family:"IBM Plex Mono", monospace;
     font-size:0.78rem;
@@ -278,6 +297,8 @@
     .poster{min-height:190px;}
     .timeline li{grid-template-columns:1fr;}
     .yr{padding-top:0;}
+    .hero-inner{flex-direction:column-reverse;gap:24px;}
+    .hero-photo img{width:104px;height:104px;}
   }
 
   @media (prefers-reduced-motion:no-preference){
@@ -300,16 +321,21 @@
 
 <header class="hero">
   <div class="wrap hero-inner">
-    <p class="eyebrow">Senior Product Manager — Toronto</p>
-    <h1>Matt Hughes</h1>
-    <p class="tagline">Data-driven product veteran, twenty years into shipping streaming platforms, SAAS products and AI solutions. Lately I've been building small, playable proofs to understand agentic AI as well as I understand a roadmap.</p>
-    <div class="hero-links">
-      <a href="mailto:matthughes72@gmail.com">matthughes72@gmail.com</a>
-      <a href="https://github.com/mhughes72" target="_blank" rel="noopener">GitHub ↗</a>
-      <a href="https://www.linkedin.com/in/matthewhughes/" target="_blank" rel="noopener">LinkedIn ↗</a>
-      <span>Picton, Ontario</span>
+    <div class="hero-text">
+      <p class="eyebrow">Senior Product Manager — Toronto</p>
+      <h1>Matt Hughes</h1>
+      <p class="tagline">Data-driven product veteran, twenty years into shipping streaming platforms, SAAS products and AI solutions. Lately I've been building small, playable proofs to understand agentic AI as well as I understand a roadmap.</p>
+      <div class="hero-links">
+        <a href="mailto:matthughes72@gmail.com">matthughes72@gmail.com</a>
+        <a href="https://github.com/mhughes72" target="_blank" rel="noopener">GitHub ↗</a>
+        <a href="https://www.linkedin.com/in/matthewhughes/" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <span>Picton, Ontario</span>
+      </div>
+      <a class="hero-cta" href="#lab">See the experiments ↓</a>
     </div>
-    <a class="hero-cta" href="#lab">See the experiments ↓</a>
+    <div class="hero-photo">
+      <img src="assets/matt-hughes.jpg" alt="Matt Hughes" width="148" height="148">
+    </div>
   </div>
 </header>
 
