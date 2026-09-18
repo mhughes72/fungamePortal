@@ -6,6 +6,7 @@ Matt's portfolio site for PM job applications — background + four live AI expe
 
 - `index.html` — the entire site. Single self-contained file (inline CSS/JS), no build step. **This is the single source of truth — edit it directly.** No separate template/fragment file exists anywhere else; don't recreate one.
 - `assets/matt-hughes.jpg` — portrait used in the hero.
+- `assets/resume.pdf` — résumé, linked from the hero's "Download résumé" button. **To replace it: just overwrite this exact file with the new PDF, same filename.** No HTML changes needed — the link points at the stable path, not a dated filename. (Currently the placeholder CV Matt provided 2026-09-18; he said he'll swap it for a real one later.)
 - `package.json` — `npm start` runs `serve -s . -l $PORT` for both local preview and Railway's deploy.
 - `.claude/launch.json` — lets Claude's browser preview tool run the site locally via `npm start`.
 

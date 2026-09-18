@@ -137,6 +137,16 @@
     color:#171308;
     text-decoration:none;
   }
+  .hero-actions{display:flex;flex-wrap:wrap;gap:14px;}
+  .hero-cta-ghost{
+    border-color:var(--line);
+    color:var(--text-dim);
+  }
+  .hero-cta-ghost:hover{
+    background:transparent;
+    border-color:var(--text-faint);
+    color:var(--text);
+  }
 
   /* ---------- BACKGROUND / TIMELINE ---------- */
   .background{padding-block:64px;border-bottom:1px solid var(--line);}
@@ -331,7 +341,10 @@
         <a href="https://www.linkedin.com/in/matthewhughes/" target="_blank" rel="noopener">LinkedIn ↗</a>
         <span>Picton, Ontario</span>
       </div>
-      <a class="hero-cta" href="#lab">See the experiments ↓</a>
+      <div class="hero-actions">
+        <a class="hero-cta" href="#lab">See the experiments ↓</a>
+        <a class="hero-cta hero-cta-ghost" href="assets/resume.pdf" download="Matt Hughes - Resume.pdf">Download résumé ↓</a>
+      </div>
     </div>
     <div class="hero-photo">
       <img src="assets/matt-hughes.jpg" alt="Matt Hughes" width="148" height="148">
