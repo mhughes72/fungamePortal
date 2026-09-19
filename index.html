@@ -208,6 +208,7 @@
     overflow:hidden;
   }
   .poster svg{display:block;width:100%;height:100%;}
+  .poster img{display:block;width:100%;height:100%;object-fit:cover;}
 
   .card-body{
     padding:32px 34px;
@@ -423,35 +424,7 @@
 
       <article class="project">
         <div class="poster">
-          <svg viewBox="0 0 600 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Warm amber bar scene with a row of portrait circles">
-            <defs>
-              <radialGradient id="barGlow" cx="30%" cy="25%" r="75%">
-                <stop offset="0%" stop-color="#3a2412"/>
-                <stop offset="100%" stop-color="#1a1006"/>
-              </radialGradient>
-              <linearGradient id="barBar" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#241708"/>
-                <stop offset="100%" stop-color="#150d04"/>
-              </linearGradient>
-            </defs>
-            <rect width="600" height="500" fill="url(#barGlow)"/>
-            <rect y="380" width="600" height="120" fill="url(#barBar)"/>
-            <rect y="376" width="600" height="6" fill="#5a3a17"/>
-            <g fill="none" stroke="#7a5628" stroke-width="2" opacity="0.5">
-              <line x1="0" y1="60" x2="600" y2="60"/>
-              <line x1="0" y1="130" x2="600" y2="130"/>
-            </g>
-            <g>
-              <circle cx="150" cy="180" r="58" fill="#4a3018" opacity="0.9"/>
-              <circle cx="300" cy="150" r="66" fill="#5a3a1f" opacity="0.95"/>
-              <circle cx="450" cy="185" r="58" fill="#4a3018" opacity="0.9"/>
-              <circle cx="150" cy="180" r="58" fill="none" stroke="#d19a4a" stroke-width="2" opacity="0.6"/>
-              <circle cx="300" cy="150" r="66" fill="none" stroke="#e9b568" stroke-width="2.5" opacity="0.8"/>
-              <circle cx="450" cy="185" r="58" fill="none" stroke="#d19a4a" stroke-width="2" opacity="0.6"/>
-            </g>
-            <text x="300" y="320" text-anchor="middle" font-family="Georgia, serif" font-size="30" fill="#e9b568" letter-spacing="2">THE PHILOSOPHER'S BAR</text>
-            <text x="300" y="352" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="15" fill="#a8845a">"Is our fate predetermined, or do we truly have agency?"</text>
-          </svg>
+          <img src="assets/screenshot-philosophers-bar.png" alt="The Philosopher's Bar app: thinker selection screen with a grid of philosopher portraits and a topic field" loading="lazy">
         </div>
         <div class="card-body">
           <span class="card-kicker mono">Experiment 01 · Multi-agent debate</span>
